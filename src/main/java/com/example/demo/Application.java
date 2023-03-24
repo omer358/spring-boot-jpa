@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class Application {
@@ -24,7 +25,8 @@ public class Application {
         return args ->{
             Student Maria = new Student("Maria", "john","maria@gmail.com",23);
             Student huda = new Student("Huda", "Omer","huda@gmail.com",23);
-            Student omer = new Student("Omer", "Maki","omer@gmail.com",23);
+            String email = "omer@gmail.com";
+            Student omer = new Student("Omer", "Maki", email,23);
             Student khansa = new Student("Khansa", "Jaffar","khansa@gmail.com",23);
             Student sara = new Student("Sara", "Mustafa","Sara@gmail.com",23);
             System.out.println("Saving multiple students to the database");
@@ -38,23 +40,10 @@ public class Application {
                             ()->{
                                 System.out.println("Student not exists");
             });
-            System.out.println("Find student by ID 11");
-            studentRepository
-                    .findById(11L)
-                    .ifPresentOrElse(
-                            Application::accept,
-                            ()->{
-                                System.out.println("Student with ID 11 not exists");
-                            });
-            System.out.println("The total number of student");
-            System.out.println(studentRepository.count());
-            List<Student> students = studentRepository.findAll();
-            System.out.println("Print all the student in the database");
-            students.forEach(System.out::println);
-            System.out.println("Delete the student with ID 2");
-            studentRepository.deleteById(2L);
-            System.out.println("Print all the student in the database");
-            studentRepository.findAll().forEach(System.out::println);
+
+            Optional<Student> student = studentRepository.findStudentByEmail(email);
+            student.ifPresentOrElse(System.out::println,
+                    ()-> System.out.println("There is no student with this email"));
         };
     }
 
