@@ -14,6 +14,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     List<Student> findAllStudentsByAgeGreaterThanEqual(
             Integer age);
 
-    @Query("SELECT s from Student s WHERE s.firstName= ?1")
+    // performing native queries using postgres language.
+    @Query(value = "SELECT * from student WHERE first_name LIKE ?1",nativeQuery = true)
     List<Student> findByFirstName(String firstName);
 }
