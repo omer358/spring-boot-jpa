@@ -25,9 +25,10 @@ public class Application {
     CommandLineRunner commandLineRunner(StudentRepository studentRepository){
         return args ->{
 //            generateRandomStudents(studentRepository);
-            Sort firstName = Sort.by(Sort.Direction.DESC, "firstName");
+            Sort firstName = Sort.by(Sort.Direction.DESC, "firstName")
+                    .and(Sort.by("age").descending());
             studentRepository.findAll(firstName).forEach(
-                    student -> System.out.println(student.getFirstName())
+                    student -> System.out.println(student.getFirstName()+ " " + student.getAge())
             );
         };
     }
