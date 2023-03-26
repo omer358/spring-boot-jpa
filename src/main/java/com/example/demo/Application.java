@@ -25,12 +25,13 @@ public class Application {
             Student Maria = new Student("Maria", "john","maria@gmail.com",20);
             Student huda = new Student("Huda", "Omer","huda@gmail.com",23);
             Student omer = new Student("Omer", "Khalid", "omer@gmail.com",21);
+            Student ignoredOmer = new Student("Omer", "Taha", "omer.ignored@gmail.com",21);
             Student omer2 = new Student("Omer", "Mazin", "omer2@gmail.com",23);
             Student omer3 = new Student("Omer", "Mustafa", "omer3@gmail.com",22);
             Student khansa = new Student("Khansa", "Jaffar","khansa@gmail.com",30);
             Student sara = new Student("Sara", "Mustafa","Sara@gmail.com",28);
             System.out.println("Saving multiple students to the database");
-            studentRepository.saveAll(List.of(Maria,huda,omer,khansa,sara));
+            studentRepository.saveAll(List.of(Maria,huda,omer,khansa,sara,ignoredOmer));
 
             System.out.println("find student by Id 1");
             studentRepository
@@ -63,6 +64,7 @@ public class Application {
             studentRepository.findStudentWithAgeGreaterThan(23).forEach(
                     System.out::println
             );
+            System.out.println(studentRepository.deleteStudentById(6L));
         };
     }
 

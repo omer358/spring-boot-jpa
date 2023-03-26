@@ -1,8 +1,10 @@
 package com.example.demo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,4 +23,9 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     @Query(value = "SELECT * from student WHERE age >= :age", nativeQuery = true)
     List<Student> findStudentWithAgeGreaterThan(@Param("age") Integer age);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Student u WHERE u.id =?1")
+    int deleteStudentById(Long id);
 }
