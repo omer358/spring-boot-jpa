@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import com.example.demo.models.Student;
+import com.example.demo.models.StudentIdCard;
+import com.example.demo.repos.StudentIdCardRepository;
+import com.example.demo.repos.StudentRepository;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootApplication
 public class Application {
@@ -24,18 +25,24 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(StudentRepository studentRepository){
+    CommandLineRunner commandLineRunner(
+            StudentRepository studentRepository,
+            StudentIdCardRepository studentIdCardRepository){
         return args ->{
-//            generateRandomStudents(studentRepository);
-//            sorting(studentRepository);
+            Faker faker = new Faker();
+            String firstName = faker.name().firstName();
+            String lastName = faker.name().lastName();
+            String email = String.format("%s.%s@nctr.sd",firstName,lastName);
+            Student student = new Student(
+                    firstName,
+                    lastName,
+                    email,
+                    faker.number().numberBetween(17, 60));
 
-            PageRequest pageRequest = PageRequest.of(
-                    0,
-                    10   ,
-                    Sort.by("age").ascending()
+            StudentIdCard studentIdCard = new StudentIdCard(
+                    "123456789", student
             );
-            Page<Student> page = (Page<Student>) studentRepository.findAll(pageRequest);
-            System.out.println(page);
+            studentIdCardRepository.save(studentIdCard);
         };
     }
 
