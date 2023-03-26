@@ -30,7 +30,10 @@ public class StudentIdCard {
     @OneToOne(cascade = CascadeType.ALL )
     @JoinColumn(
             name = "student_id",
-            referencedColumnName = "id"
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "STUDENT_ID_CARD_STUDENT_ID_FK"
+            )
     )
     private Student student;
 
