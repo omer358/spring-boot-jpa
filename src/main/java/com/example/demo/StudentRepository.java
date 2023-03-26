@@ -18,4 +18,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     // performing native queries using postgres language.
     @Query(value = "SELECT * from student WHERE first_name LIKE :firstName",nativeQuery = true)
     List<Student> findByFirstName(@Param("firstName") String firstName);
+
+    @Query(value = "SELECT * from student WHERE age >= :age", nativeQuery = true)
+    List<Student> findStudentWithAgeGreaterThan(@Param("age") Integer age);
 }

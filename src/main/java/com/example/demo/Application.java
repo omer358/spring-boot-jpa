@@ -58,6 +58,11 @@ public class Application {
             );
             System.out.println("find students by first name");
             studentRepository.findByFirstName("Omer").forEach(System.out::println);
+
+            System.out.println("Find Student with age greater than or equal to 23");
+            studentRepository.findStudentWithAgeGreaterThan(23).forEach(
+                    System.out::println
+            );
         };
     }
 
