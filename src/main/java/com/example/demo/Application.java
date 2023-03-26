@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -25,12 +27,24 @@ public class Application {
     CommandLineRunner commandLineRunner(StudentRepository studentRepository){
         return args ->{
 //            generateRandomStudents(studentRepository);
-            Sort firstName = Sort.by(Sort.Direction.DESC, "firstName")
-                    .and(Sort.by("age").descending());
-            studentRepository.findAll(firstName).forEach(
-                    student -> System.out.println(student.getFirstName()+ " " + student.getAge())
+//            sorting(studentRepository);
+
+            PageRequest pageRequest = PageRequest.of(
+                    0,
+                    10   ,
+                    Sort.by("age").ascending()
             );
+            Page<Student> page = (Page<Student>) studentRepository.findAll(pageRequest);
+            System.out.println(page);
         };
+    }
+
+    private static void sorting(StudentRepository studentRepository) {
+        Sort firstName = Sort.by(Sort.Direction.DESC, "firstName")
+                .and(Sort.by("age").descending());
+        studentRepository.findAll(firstName).forEach(
+                student -> System.out.println(student.getFirstName()+ " " + student.getAge())
+        );
     }
 
     private static void generateRandomStudents(StudentRepository studentRepository) {
