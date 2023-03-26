@@ -18,7 +18,7 @@ public class StudentIdCard {
             allocationSize = 1)
     @GeneratedValue(
             strategy = SEQUENCE,
-            generator = "student_sequence")
+            generator = "student_card_id_sequence")
     @Column(name = "id", updatable = false)
     private Long id;
     @Column(
