@@ -23,11 +23,14 @@ public class Student {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String lastName;
-    @Column( nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String email;
 
     @Column(nullable = false)
     private Integer age;
+
+    @OneToOne(mappedBy = "student")
+    private StudentIdCard studentIdCard;
 
     public Student() {
     }
