@@ -8,7 +8,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Table(
         name = "student",
         uniqueConstraints = {
-                @UniqueConstraint(name = "student_email_unique",  columnNames = "email")
+                @UniqueConstraint(name = "student_email_unique", columnNames = "email")
         }
 )
 public class Student {
@@ -29,7 +29,9 @@ public class Student {
     @Column(nullable = false)
     private Integer age;
 
-    @OneToOne(mappedBy = "student")
+    @OneToOne(
+            mappedBy = "student",
+            orphanRemoval = true)
     private StudentIdCard studentIdCard;
 
     public Student() {
