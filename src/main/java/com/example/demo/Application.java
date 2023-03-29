@@ -52,9 +52,9 @@ public class Application {
             StudentRepository studentRepository,
             StudentIdCardRepository studentIdCardRepository) {
         return args -> {
-            studentRepository.findById(109L).ifPresent(System.out::println);
-            studentIdCardRepository.findById(1L)
-                    .ifPresent(System.out::println);
+//            studentRepository.findById(109L).ifPresent(System.out::println);
+//            studentIdCardRepository.findById(1L)
+//                    .ifPresent(System.out::println);
 
 //            studentRepository.deleteById(108L);
         };

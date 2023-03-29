@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -31,8 +32,13 @@ public class Student {
 
     @OneToOne(
             mappedBy = "student",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY,
             orphanRemoval = true)
     private StudentIdCard studentIdCard;
+
+    @OneToMany(mappedBy = "student")
+    private List<Book> books;
 
     public Student() {
     }
