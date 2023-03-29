@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -37,8 +38,8 @@ public class Student {
             orphanRemoval = true)
     private StudentIdCard studentIdCard;
 
-    @OneToMany(mappedBy = "student")
-    private List<Book> books;
+    @OneToMany(mappedBy = "student", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Book> books = new ArrayList<>();
 
     public Student() {
     }
@@ -65,7 +66,7 @@ public class Student {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void  setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -91,6 +92,19 @@ public class Student {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public void  addBook(Book book){
+        if(!this.books.contains(book)){
+            this.books.add(book);
+            book.setStudent(this);
+        }
+    }
+    public void removeBook(Book book){
+        if(this.books.contains(book)){
+            books.remove(book);
+            book.setStudent(null);
+        }
     }
 
     @Override
